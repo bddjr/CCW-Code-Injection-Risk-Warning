@@ -36,9 +36,9 @@ https://bddjr.github.io/CCW-Code-Injection-Risk-Warning/CCW-Code-Injection-Risk-
 > 参考 https://muffin.ink/blog/scratch-vulnerability-disclosure/  
 > 漏洞演示 https://www.ccw.site/detail/69f73e772a7d36316189ef73  
 
----
-
-参考 https://github.com/bddjr/CCW-Code-Injection
+> [!NOTE]
+> 记录共创世界的前端代码注入漏洞、可能的盗号方式和防护方式建议。  
+> https://github.com/bddjr/CCW-Code-Injection  
 
 ---
 
