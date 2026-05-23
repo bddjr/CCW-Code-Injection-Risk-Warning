@@ -2,7 +2,7 @@
 // @name         CCW-Code-Injection-Risk-Warning
 // @description  CCW代码注入风险警告，让你的账号更安全。
 // @author       bddjr
-// @version      20260510-1243
+// @version      20260523-1242
 // @match        https://www.ccw.site/*
 // @match        https://learn.ccw.site/*
 // @match        https://m.ccw.site/*
@@ -124,51 +124,11 @@ if (location.hostname == 'm.ccw.site') {
         if (acceptLoadExt !== true && out?.targets?.[0]?.blocks) {
             if (acceptLoadExt === null) {
                 const { targets, extensions, extensionURLs } = out
-                const hasCCWData = checkHasExt(extensions, "CCWData")
-                const hasWitCatJSSandBox = checkHasExt(extensions, "WitCatJSSandBox")
                 let hasCustomExt = false
                 let needWarn = false
                 const msg = ['【脚本 CCW代码注入风险警告】']
-                // CCWData
-                if (hasCCWData) {
-                    // needWarn = true
-                    if (hasWitCatJSSandBox) {
-                        needWarn = true
-                        msg.push('漏洞链警告！作品可能会使用“白猫的JS沙箱”扩展调用“Gandi云数据”扩展的代码注入漏洞积木！')
-                    }
-                    // 检测代码注入漏洞积木
-                    let hasCodeInjectionBlock = false
-                    const codeInjectionBlocksCount = {
-                        CCWData_getValueInJSON: 0,
-                        CCWData_setValueInJSON: 0
-                    }
-                    for (const target of targets) {
-                        const { blocks } = target
-                        for (const id in blocks) {
-                            const block = blocks[id]
-                            const { opcode } = block
-                            if (codeInjectionBlocksCount.hasOwnProperty(opcode)) {
-                                hasCodeInjectionBlock = true
-                                codeInjectionBlocksCount[opcode]++
-                            }
-                        }
-                    }
-                    // 生成警告消息
-                    const thisMsgPrefix = '作品试图加载“Gandi云数据”扩展，'
-                    if (hasCodeInjectionBlock) {
-                        needWarn = true
-                        const thisMsg = [thisMsgPrefix + '并使用以下代码注入漏洞积木：']
-                        for (const opcode in codeInjectionBlocksCount) {
-                            const count = codeInjectionBlocksCount[opcode]
-                            if (count) thisMsg.push(JSON.stringify(opcode) + ' × ' + count + ' 块')
-                        }
-                        msg.push(thisMsg.join('\n'))
-                    } else {
-                        // msg.push(thisMsgPrefix + '但未检测到代码注入漏洞积木。')
-                    }
-                }
                 // 自制扩展
-                if (extensionURLs instanceof Object) {
+                if (typeof extensionURLs == 'object' && extensionURLs) {
                     const customExtDisplayArray = ['作品试图加载自制扩展：']
                     for (const key in extensionURLs) {
                         const url = new URL(extensionURLs[key], location).href;

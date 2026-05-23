@@ -4,7 +4,6 @@ CCW代码注入风险警告，让你的账号更安全。
 https://bddjr.github.io/CCW-Code-Injection-Risk-Warning/CCW-Code-Injection-Risk-Warning.user.js  
 
 该脚本支持检测并拦截以下攻击：
-- 基于作品使用 “Gandi 云数据” 扩展的代码注入漏洞攻击
 - 基于作品加载第三方扩展的代码注入漏洞攻击
 - 基于创作者学院的文章里嵌入 iframe 的代码注入漏洞攻击
 
