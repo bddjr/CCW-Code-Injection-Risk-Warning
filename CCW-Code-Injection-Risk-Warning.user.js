@@ -2,7 +2,7 @@
 // @name         CCW-Code-Injection-Risk-Warning
 // @description  CCW代码注入风险警告，让你的账号更安全。
 // @author       bddjr
-// @version      20260606-2307
+// @version      20260606-2309
 // @match        https://www.ccw.site/*
 // @match        https://learn.ccw.site/*
 // @match        https://m.ccw.site/*
@@ -22,6 +22,8 @@ if (location.hostname == 'm.ccw.site') {
     // 脚本无法防御该攻击，因为攻击者的代码先执行。
     // 参考 https://github.com/bddjr/CCW-Code-Injection-Risk-Warning/issues/3
     if (
+        // 白名单
+        // ccw个人信息清空学校.svg
         location.pathname != '/user_projects_assets/e8095c8b2efbc421b974bf9ec3dd5844.svg' &&
         document.contentType == 'image/svg+xml'
     ) {
