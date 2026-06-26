@@ -2,7 +2,7 @@
 // @name         CCW-Code-Injection-Risk-Warning
 // @description  CCW代码注入风险警告，让你的账号更安全。
 // @author       bddjr
-// @version      20260606-2309
+// @version      20260626-1037
 // @match        https://www.ccw.site/*
 // @match        https://learn.ccw.site/*
 // @match        https://m.ccw.site/*
@@ -21,12 +21,10 @@ if (location.hostname == 'm.ccw.site') {
     // 基于新标签页访问 svg 网址的代码注入攻击
     // 脚本无法防御该攻击，因为攻击者的代码先执行。
     // 参考 https://github.com/bddjr/CCW-Code-Injection-Risk-Warning/issues/3
-    if (
-        // 白名单
-        // ccw个人信息清空学校.svg
-        location.pathname != '/user_projects_assets/e8095c8b2efbc421b974bf9ec3dd5844.svg' &&
-        document.contentType == 'image/svg+xml'
-    ) {
+
+    // 该漏洞已修复，但不确定通过缓存访问的人是否能接收到CSP响应头，所以暂时保留这段代码。
+
+    if (document.contentType == 'image/svg+xml') {
         try {
             window.stop()
         } catch (e) { }

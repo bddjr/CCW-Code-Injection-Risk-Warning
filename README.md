@@ -8,23 +8,6 @@ https://bddjr.github.io/CCW-Code-Injection-Risk-Warning/CCW-Code-Injection-Risk-
 - 基于创作者学院的文章里嵌入 iframe 的代码注入漏洞攻击
 
 > [!CAUTION]  
-> 该脚本无法拦截使用标签页访问 m.ccw.site 加载恶意 svg 的代码注入攻击。  
-> 在第三方网站使用 iframe 嵌入 m.ccw.site 加载恶意 svg 也可以执行恶意代码。  
-> 该漏洞可以被攻击者用于盗号。  
-> 漏洞演示：https://m.ccw.site/user_projects_assets/a8039314e7b97ea48e176b34090b680e.svg  
-> 
-> 建议根据按照以下步骤操作，禁止 m.ccw.site 运行 JavaScript ，以增强安全性：
-> 
-> - 如果您使用 Google Chrome 浏览器：  
->   访问 https://m.ccw.site ，然后点击网址左侧的按钮，然后点击“网站设置”，然后将“JavaScript”权限改为“阻止”。  
-> 
-> - 如果您使用 Microsoft Edge 浏览器：  
->   访问 https://m.ccw.site ，然后点击网址左侧的🔒按钮，然后点击“此网站的权限”，然后将“JavaScript”权限改为“阻止”。  
-> 
-> - 如果您使用 Mozilla Firefox 浏览器：  
->   详见 https://support.mozilla.org/zh-CN/kb/javascript-settings-for-interactive-web-pages  
-
-> [!CAUTION]  
 > 攻击者成功注入恶意代码之后，可以盗取浏览器自动填充的账号密码，即使网页未显示输入框。  
 > 建议禁用浏览器的自动填充密码，或者改为 “在查看或填写网站密码之前提示设备登录选项。始终征求许可”  
 > 
