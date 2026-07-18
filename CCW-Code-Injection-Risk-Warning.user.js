@@ -2,7 +2,7 @@
 // @name         CCW-Code-Injection-Risk-Warning
 // @description  CCW代码注入风险警告，让你的账号更安全。
 // @author       bddjr
-// @version      20260626-1121
+// @version      20260718-1319
 // @match        https://www.ccw.site/*
 // @match        https://learn.ccw.site/*
 // @match        https://m.ccw.site/*
@@ -160,24 +160,19 @@ if (location.hostname == 'm.ccw.site') {
                         }
                         // 警告
                         if (needWarn) {
-                            if (window !== window.top && !location.pathname.startsWith('/embed')) {
-                                acceptLoadExt = false
-                                console.log('【脚本 CCW代码注入风险警告】检测到在 iframe 里，且网址路径开头不是 /embed ，自动阻止加载可疑作品')
-                            } else {
-                                console.warn(msg.join('\n\n'))
-                                if (hasCustomExt) msg.push('如果要复制链接，请打开DevTools，查看控制台(Console)。\n如果控制台没有内容，请刷新页面。')
-                                msg.push('如果要继续加载作品，请输入“继续加载”，然后点击“确定”，\n否则点击“取消”。')
-                                for (const message = msg.join('\n\n'); ;) {
-                                    let input = window.prompt(message)
-                                    if (input == null) {
-                                        acceptLoadExt = false
-                                        break
-                                    }
-                                    input = input.trim().toLowerCase()
-                                    if (["继续加载", "繼續加載", "jixujiazai"].includes(input)) {
-                                        acceptLoadExt = true
-                                        break
-                                    }
+                            console.warn(msg.join('\n\n'))
+                            if (hasCustomExt) msg.push('如果要复制链接，请打开DevTools，查看控制台(Console)。\n如果控制台没有内容，请刷新页面。')
+                            msg.push('如果要继续加载作品，请输入“继续加载”，然后点击“确定”，\n否则点击“取消”。')
+                            for (const message = msg.join('\n\n'); ;) {
+                                let input = window.prompt(message)
+                                if (input == null) {
+                                    acceptLoadExt = false
+                                    break
+                                }
+                                input = input.trim().toLowerCase()
+                                if (["继续加载", "繼續加載", "jixujiazai"].includes(input)) {
+                                    acceptLoadExt = true
+                                    break
                                 }
                             }
                         }
