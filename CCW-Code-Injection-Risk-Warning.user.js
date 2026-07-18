@@ -2,7 +2,7 @@
 // @name         CCW-Code-Injection-Risk-Warning
 // @description  CCW代码注入风险警告，让你的账号更安全。
 // @author       bddjr
-// @version      20260718-1319
+// @version      20260718-1413
 // @match        https://www.ccw.site/*
 // @match        https://learn.ccw.site/*
 // @match        https://m.ccw.site/*
@@ -122,69 +122,57 @@ if (location.hostname == 'm.ccw.site') {
 
     const { parse } = JSON
 
-    if (location.pathname.startsWith('/profile/')) {
-        // 防止个人资料的“学校”字段太长，导致页面无响应（卡死）
-        JSON.parse = function myParse() {
-            const out = parse.apply(this, arguments)
-            if (typeof out?.body?.school == 'string' && out.body.school.length > 200) {
-                console.log('【脚本 CCW代码注入风险警告】防止个人资料的“学校”字段太长，导致页面无响应（卡死）')
-                out.body.school = out.body.school.slice(0, 200)
-            }
-            return out
-        }
-    } else {
-        JSON.parse = function myParse() {
-            const out = parse.apply(this, arguments)
-            if (out?.targets?.[0]?.blocks) {
-                // project.json
-                if (acceptLoadExt !== true) {
-                    if (acceptLoadExt === null) {
-                        const { targets, extensions, extensionURLs } = out
-                        let hasCustomExt = false
-                        let needWarn = false
-                        const msg = ['【脚本 CCW代码注入风险警告】']
-                        // 自制扩展
-                        if (typeof extensionURLs == 'object' && extensionURLs) {
-                            const customExtDisplayArray = ['作品试图加载自制扩展：']
-                            for (const key in extensionURLs) {
-                                const url = new URL(extensionURLs[key], location).href;
-                                if (!url.startsWith(allowExtensionURLPrefix)) {
-                                    hasCustomExt = true
-                                    customExtDisplayArray.push(JSON.stringify(key) + '\n' + url)
-                                }
-                            }
-                            if (hasCustomExt) {
-                                needWarn = true
-                                msg.push(...customExtDisplayArray)
+    JSON.parse = function myParse() {
+        const out = parse.apply(this, arguments)
+        if (out?.targets?.[0]?.blocks) {
+            // project.json
+            if (acceptLoadExt !== true) {
+                if (acceptLoadExt === null) {
+                    const { targets, extensions, extensionURLs } = out
+                    let hasCustomExt = false
+                    let needWarn = false
+                    const msg = ['【脚本 CCW代码注入风险警告】']
+                    // 自制扩展
+                    if (typeof extensionURLs == 'object' && extensionURLs) {
+                        const customExtDisplayArray = ['作品试图加载自制扩展：']
+                        for (const key in extensionURLs) {
+                            const url = new URL(extensionURLs[key], location).href;
+                            if (!url.startsWith(allowExtensionURLPrefix)) {
+                                hasCustomExt = true
+                                customExtDisplayArray.push(JSON.stringify(key) + '\n' + url)
                             }
                         }
-                        // 警告
-                        if (needWarn) {
-                            console.warn(msg.join('\n\n'))
-                            if (hasCustomExt) msg.push('如果要复制链接，请打开DevTools，查看控制台(Console)。\n如果控制台没有内容，请刷新页面。')
-                            msg.push('如果要继续加载作品，请输入“继续加载”，然后点击“确定”，\n否则点击“取消”。')
-                            for (const message = msg.join('\n\n'); ;) {
-                                let input = window.prompt(message)
-                                if (input == null) {
-                                    acceptLoadExt = false
-                                    break
-                                }
-                                input = input.trim().toLowerCase()
-                                if (["继续加载", "繼續加載", "jixujiazai"].includes(input)) {
-                                    acceptLoadExt = true
-                                    break
-                                }
+                        if (hasCustomExt) {
+                            needWarn = true
+                            msg.push(...customExtDisplayArray)
+                        }
+                    }
+                    // 警告
+                    if (needWarn) {
+                        console.warn(msg.join('\n\n'))
+                        if (hasCustomExt) msg.push('如果要复制链接，请打开DevTools，查看控制台(Console)。\n如果控制台没有内容，请刷新页面。')
+                        msg.push('如果要继续加载作品，请输入“继续加载”，然后点击“确定”，\n否则点击“取消”。')
+                        for (const message = msg.join('\n\n'); ;) {
+                            let input = window.prompt(message)
+                            if (input == null) {
+                                acceptLoadExt = false
+                                break
+                            }
+                            input = input.trim().toLowerCase()
+                            if (["继续加载", "繼續加載", "jixujiazai"].includes(input)) {
+                                acceptLoadExt = true
+                                break
                             }
                         }
                     }
-                    if (acceptLoadExt === false) throw Error("Reject by user script: CCW-Code-Injection-Risk-Warning")
                 }
-                if (acceptLoadExt === true && JSON.parse === myParse) {
-                    // 取消劫持
-                    JSON.parse = parse
-                }
+                if (acceptLoadExt === false) throw Error("Reject by user script: CCW-Code-Injection-Risk-Warning")
             }
-            return out
+            if (acceptLoadExt === true && JSON.parse === myParse) {
+                // 取消劫持
+                JSON.parse = parse
+            }
         }
+        return out
     }
 }

@@ -6,7 +6,6 @@ https://bddjr.github.io/CCW-Code-Injection-Risk-Warning/CCW-Code-Injection-Risk-
 该脚本支持检测并拦截以下攻击：
 - 基于作品加载第三方扩展的代码注入漏洞攻击
 - 基于创作者学院的文章里嵌入 iframe 的代码注入漏洞攻击
-- 个人资料的“学校”字段太长导致页面无响应（卡死）
 
 > [!CAUTION]  
 > 攻击者成功注入恶意代码之后，可以盗取浏览器自动填充的账号密码，即使网页未显示输入框。  
